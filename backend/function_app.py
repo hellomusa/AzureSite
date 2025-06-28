@@ -8,12 +8,12 @@ app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
 def Foo(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Processing Foo request.')
 
-    foo_buzz = {
+    foobar_fizzbuzz = {
         "foo": "bar",
         "fizz": "buzz"
     }
 
     return func.HttpResponse(
-        json.dumps(foo_buzz),
+        json.dumps(foobar_fizzbuzz),
         status_code=200
     )
