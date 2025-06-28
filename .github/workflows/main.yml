@@ -1,4 +1,4 @@
-name: Azure CI
+name: Azure Blobs CI
 
 on:
   push:
@@ -19,7 +19,7 @@ jobs:
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-    - name: Upload files to blob storage
+    - name: Upload blobs to storage
       uses: azure/CLI@v1
       with:
         inlineScript: |

@@ -1,23 +1,17 @@
-console.log("loaded!")
+const PROD_HOSTNAME = "azure.hellomusa.com";
+const PROD_FUNCTION_ENDPOINT = "https://myazurecloudfunction.azurewebsites.net/api/foo";
+const DEV_FUNCTION_ENDPOINT = "http://localhost:7071/api/foo";
 
-const localAzureFunctionEndpoint = "http://localhost:7071/api/foo"
-const productionAzureFunctionEndpoint = "https://myazurecloudfunction.azurewebsites.net/api/foo"
+const hostname = window.location.hostname;
+const isProduction = hostname === PROD_HOSTNAME;
+const functionEndpoint = isProduction ? PROD_FUNCTION_ENDPOINT : DEV_FUNCTION_ENDPOINT;
 
-const url = window.location.href.includes("127.0.0.1") ? localAzureFunctionEndpoint : productionAzureFunctionEndpoint;
-
-console.log(url)
-
-fetch(url)
+fetch(functionEndpoint)
     .then((response) => {
         if (!response.ok) {
             throw new Error(`HTTP error: ${response.status}`)
         }
-
         return response.json();
     })
-    .then((json) => {
-        console.log(json);
-    })
-    .catch((error) => {
-        console.log(`Could not fetch foo: ${error}`)
-    })
+    .then((json) => console.log(json))
+    .catch((error) => console.log(`Could not fetch foo: ${error}`))
