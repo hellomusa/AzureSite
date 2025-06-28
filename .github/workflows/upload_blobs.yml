@@ -1,8 +1,10 @@
-name: Azure Blobs CI
+name: Upload blobs to Azure Storage
 
 on:
   push:
     branches: [ main ]
+    paths:
+        - 'frontend/**'
 
 permissions:
   id-token: write
@@ -11,6 +13,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
     - uses: actions/checkout@v3
     - uses: azure/login@v2
@@ -24,6 +27,7 @@ jobs:
       with:
         inlineScript: |
             az storage blob upload-batch --overwrite --account-name tempcloudresume  --auth-mode key -d '$web' -s frontend
+            
     - name: Purge CDN endpoint
       uses: azure/CLI@v1
       with:
